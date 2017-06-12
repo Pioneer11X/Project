@@ -222,3 +222,5 @@ void processInput(GLFWwindow * window)
 		glfwSetWindowShouldClose(window, true);
 	}
 }
+
+#undef STB_IMAGE_IMPLEMENTATION
