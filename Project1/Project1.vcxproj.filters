@@ -43,5 +43,11 @@
     <None Include="simple.fs">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="lamp.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="lamp.fs">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -125,6 +125,8 @@
     <ClInclude Include="Shader.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="lamp.fs" />
+    <None Include="lamp.vs" />
     <None Include="simple.fs" />
     <None Include="simple.vs" />
   </ItemGroup>

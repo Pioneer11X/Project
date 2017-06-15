@@ -33,6 +33,8 @@ public:
 	void setInt(const std::string &name, int value) const;
 	void setFloat(const std::string &name, float value) const;
 	void setMat(const std::string &name, glm::mat4 value) const;
+	void Shader::setVec3(const std::string & name, float a, float b, float c) const;
+	void Shader::setVec3(const std::string & name, glm::vec3 a) const;
 
 	~Shader();
 };
