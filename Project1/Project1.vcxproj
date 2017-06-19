@@ -122,11 +122,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="Shader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="lamp.fs" />
     <None Include="lamp.vs" />
+    <None Include="model.fs" />
+    <None Include="model.vs" />
     <None Include="simple.fs" />
     <None Include="simple.vs" />
   </ItemGroup>
