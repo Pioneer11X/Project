@@ -13,10 +13,14 @@
 
 #include <iostream>
 
+#include "Imgui\imgui.h"
+#include "imgui_impl_glfw_gl3.h"
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
+void mouse_button_callback(GLFWwindow * window, int button, int action, int mods);
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -27,6 +31,9 @@ Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
+
+// Mouse Buttons.
+bool mouseLeftClicked = false;
 
 // timing
 float deltaTime = 0.0f;
@@ -53,11 +60,12 @@ int main()
 	}
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	glfwSetMouseButtonCallback(window, mouse_button_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetScrollCallback(window, scroll_callback);
 
 	// tell GLFW to capture our mouse
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	// glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	// glad: load all OpenGL function pointers
 	// ---------------------------------------
@@ -79,6 +87,7 @@ int main()
 	// -----------
 	Model ourModel("Assets/nanosuit/nanosuit.obj");
 
+	ImGui_ImplGlfwGL3_Init(window, false);
 
 	// draw in wireframe
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -87,6 +96,27 @@ int main()
 	// -----------
 	while (!glfwWindowShouldClose(window))
 	{
+
+		ImGui_ImplGlfwGL3_NewFrame();
+
+		// Menu
+		if (ImGui::BeginMainMenuBar())
+		{
+			if (ImGui::BeginMenu("Menu"))
+			{
+				ImGui::MenuItem("Test");
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("Help"))
+			{
+				ImGui::MenuItem("Metrics");
+				ImGui::MenuItem("Style Editor");
+				ImGui::MenuItem("About ImGui");
+				ImGui::EndMenu();
+			}
+			ImGui::EndMainMenuBar();
+		}
+
 		// per-frame time logic
 		// --------------------
 		float currentFrame = glfwGetTime();
@@ -118,6 +148,8 @@ int main()
 		ourShader.setMat("model", model);
 		ourModel.Draw(ourShader);
 
+		ImGui::Render();
+
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
@@ -148,6 +180,16 @@ void processInput(GLFWwindow *window)
 		camera.ProcessKeyboard(RIGHT, deltaTime);
 }
 
+void mouse_button_callback(GLFWwindow * window, int button, int action, int mods)
+{
+	if (GLFW_MOUSE_BUTTON_1 == button && GLFW_PRESS == action) {
+		mouseLeftClicked = true;
+	}
+	else if (GLFW_MOUSE_BUTTON_1 == button && GLFW_RELEASE == action) {
+		mouseLeftClicked = false;
+	}
+}
+
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
 // ---------------------------------------------------------------------------------------------
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -161,20 +203,33 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 // -------------------------------------------------------
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
-	if (firstMouse)
-	{
+
+	if (mouseLeftClicked == true) {
+
+		// This should only execute when the mouse left is clicked.
+		if (firstMouse)
+		{
+			lastX = xpos;
+			lastY = ypos;
+			firstMouse = false;
+		}
+
+		float xoffset = xpos - lastX;
+		float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+
+		lastX = xpos;
+		lastY = ypos;
+
+		camera.ProcessMouseMovement(xoffset, yoffset);
+
+	}
+	else {
 		lastX = xpos;
 		lastY = ypos;
 		firstMouse = false;
 	}
 
-	float xoffset = xpos - lastX;
-	float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
-
-	lastX = xpos;
-	lastY = ypos;
-
-	camera.ProcessMouseMovement(xoffset, yoffset);
+	
 }
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
