@@ -104,7 +104,9 @@ int main()
 		{
 			if (ImGui::BeginMenu("Menu"))
 			{
-				ImGui::MenuItem("Test");
+				if (ImGui::MenuItem("Quit")) {
+					break;
+				}
 				ImGui::EndMenu();
 			}
 			if (ImGui::BeginMenu("Help"))
@@ -156,6 +158,8 @@ int main()
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
+
+	ImGui_ImplGlfwGL3_Shutdown();
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------
