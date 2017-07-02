@@ -13,8 +13,7 @@
 
 #include <iostream>
 
-#include "Imgui\imgui.h"
-#include "imgui_impl_glfw_gl3.h"
+#include "GUI.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -87,7 +86,7 @@ int main()
 	// -----------
 	Model ourModel("Assets/nanosuit/nanosuit.obj");
 
-	ImGui_ImplGlfwGL3_Init(window, false);
+	GUI::Instance()->Init(window);
 
 	// draw in wireframe
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -97,27 +96,7 @@ int main()
 	while (!glfwWindowShouldClose(window))
 	{
 
-		ImGui_ImplGlfwGL3_NewFrame();
-
-		// Menu
-		if (ImGui::BeginMainMenuBar())
-		{
-			if (ImGui::BeginMenu("Menu"))
-			{
-				if (ImGui::MenuItem("Quit")) {
-					break;
-				}
-				ImGui::EndMenu();
-			}
-			if (ImGui::BeginMenu("Help"))
-			{
-				ImGui::MenuItem("Metrics");
-				ImGui::MenuItem("Style Editor");
-				ImGui::MenuItem("About ImGui");
-				ImGui::EndMenu();
-			}
-			ImGui::EndMainMenuBar();
-		}
+		GUI::Instance()->Loop();
 
 		// per-frame time logic
 		// --------------------
@@ -150,7 +129,7 @@ int main()
 		ourShader.setMat("model", model);
 		ourModel.Draw(ourShader);
 
-		ImGui::Render();
+		GUI::Instance()->Draw();
 
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -159,7 +138,7 @@ int main()
 		glfwPollEvents();
 	}
 
-	ImGui_ImplGlfwGL3_Shutdown();
+	GUI::Instance()->End();
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------
