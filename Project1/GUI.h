@@ -8,7 +8,7 @@
 class GUI
 {
 
-	static GUI * instance;
+	static GUI instance;
 
 private:
 
@@ -16,7 +16,13 @@ private:
 
 public:
 	
-	static GUI * Instance();
+	// Singleton reference
+	static GUI& Instance()
+	{
+		static GUI instance;
+		return instance;
+	}
+
 
 	void Init(GLFWwindow * window);
 	void Loop();

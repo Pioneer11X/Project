@@ -86,7 +86,7 @@ int main()
 	// -----------
 	Model ourModel("Assets/nanosuit/nanosuit.obj");
 
-	GUI::Instance()->Init(window);
+	GUI::Instance().Init(window);
 
 	// draw in wireframe
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -96,7 +96,7 @@ int main()
 	while (!glfwWindowShouldClose(window))
 	{
 
-		GUI::Instance()->Loop();
+		GUI::Instance().Loop();
 
 		// per-frame time logic
 		// --------------------
@@ -129,7 +129,7 @@ int main()
 		ourShader.setMat("model", model);
 		ourModel.Draw(ourShader);
 
-		GUI::Instance()->Draw();
+		GUI::Instance().Draw();
 
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -138,7 +138,7 @@ int main()
 		glfwPollEvents();
 	}
 
-	GUI::Instance()->End();
+	GUI::Instance().End();
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------

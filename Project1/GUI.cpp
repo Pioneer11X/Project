@@ -4,15 +4,7 @@
 
 GUI::GUI()
 {
-	
-}
 
-
-GUI * GUI::Instance()
-{
-	static GUI * instance = new GUI();
-
-	return instance;
 }
 
 
@@ -58,7 +50,5 @@ void GUI::End()
 
 GUI::~GUI()
 {
-	if (nullptr != instance) {
-		delete instance;
-	}
+
 }
