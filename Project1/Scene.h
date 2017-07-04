@@ -9,9 +9,7 @@ A scene class should be the current level containing all the values, that if you
 #ifndef SCENE_H
 #define SCENE_H
 
-#include "Shader.h"
-#include "Model.h"
-#include "Camera.h"
+#include "Entity.h"
 
 #include <vector>
 
@@ -20,18 +18,20 @@ class Scene
 public:
 
 	// TODO: Change the variables to private later on.
-	std::vector<Model * > models;
+	std::vector<Entity * > entities;
 
 	Scene() {
 
 	}
 
-	void AddModel(Model * newModel) {
-		models.push_back(newModel);
+	void AddModel(Entity * newEntity) {
+		entities.push_back(newEntity);
 	}
 
-	void Draw() {
-
+	void Draw(Camera camera, float SCR_WIDTH, float SCR_HEIGHT) {
+		for (std::vector<Entity *>::iterator it = entities.begin(); it != entities.end(); it++) {
+			(*it)->Draw(camera, SCR_WIDTH, SCR_HEIGHT);
+		}
 	}
 
 	~Scene() {

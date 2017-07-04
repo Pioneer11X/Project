@@ -84,6 +84,11 @@ int main()
 	// -----------
 	Model ourModel("Assets/nanosuit/nanosuit.obj");
 
+	Scene curScene;
+
+	Entity * test = new Entity(&ourShader, &ourModel);
+	curScene.AddModel(test);
+
 	GUI::Instance().Init(window);
 
 	// draw in wireframe
@@ -114,6 +119,7 @@ int main()
 		// don't forget to enable shader before setting uniforms
 		ourShader.use();
 
+		/*
 		// view/projection transformations
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		glm::mat4 view = camera.GetViewMatrix();
@@ -126,6 +132,9 @@ int main()
 		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));	// it's a bit too big for our scene, so scale it down
 		ourShader.setMat("model", model);
 		ourModel.Draw(ourShader);
+		*/
+
+		curScene.Draw(camera, (float)SCR_WIDTH, (float)SCR_HEIGHT);
 
 		GUI::Instance().Draw();
 
