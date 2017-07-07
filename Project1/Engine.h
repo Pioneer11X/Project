@@ -10,6 +10,8 @@
 #include "Scene.h"
 #include "GUI.h"
 
+#include <vector>
+
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
@@ -43,8 +45,12 @@ private:
 
 	}
 
+	// Variables for the Engine and the Window.
+
 	GLFWwindow * _engineCurrentWindow;
 	Camera _currentCamera;
+	bool ShouldClose;
+	
 
 public:
 
@@ -98,6 +104,32 @@ public:
 		_engineCurrentWindow = window;
 
 		return true;
+
+	}
+
+	void Run(Scene _scene) {
+
+		while ( !glfwWindowShouldClose(Engine::Instance().getCurrentWindow()) )
+		{
+			// TODO: Change this to per scene basis.. much later into the Engine Dev.
+			GUI::Instance().Loop();
+
+			processInput(Engine::Instance().getCurrentWindow());
+
+			// render
+			// ------
+			glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			
+			_scene.Draw(getCurrentCamera(), SCR_WIDTH, SCR_HEIGHT);
+
+			GUI::Instance().Draw();
+
+			glfwSwapBuffers(Engine::Instance().getCurrentWindow());
+			glfwPollEvents();
+
+		}
+			
 
 	}
 

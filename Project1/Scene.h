@@ -20,6 +20,9 @@ public:
 	// TODO: Change the variables to private later on.
 	std::vector<Entity * > entities;
 
+	std::vector<Shader> shaders;
+	std::vector<Model> models;
+
 	Scene() {
 
 	}
@@ -32,6 +35,14 @@ public:
 		for (std::vector<Entity *>::iterator it = entities.begin(); it != entities.end(); it++) {
 			(*it)->Draw(camera, SCR_WIDTH, SCR_HEIGHT);
 		}
+	}
+
+	void LoadResource(Shader _shader) {
+		shaders.push_back(_shader);
+	}
+
+	void LoadResource(Model _model) {
+		models.push_back(_model);
 	}
 
 	~Scene() {
