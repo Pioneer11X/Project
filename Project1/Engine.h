@@ -113,6 +113,11 @@ public:
 
 		while ( !glfwWindowShouldClose(Engine::Instance().getCurrentWindow()) )
 		{
+
+			float currentFrame = glfwGetTime();
+			deltaTime = currentFrame - lastFrame;
+			lastFrame = currentFrame;
+
 			// TODO: Change this to per scene basis.. much later into the Engine Dev.
 			GUI::Instance().Loop();
 
@@ -168,25 +173,20 @@ public:
 void processInput(GLFWwindow *window)
 {
 
-	Camera camera = Engine::Instance().getCurrentCamera();
-
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
 		Engine::Instance()._currentCamera.ProcessKeyboard(FORWARD, deltaTime);
-		camera.ProcessKeyboard(FORWARD, deltaTime);
-		std::cout << "DSFJh" << std::endl;
 	}
 		
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		camera.ProcessKeyboard(BACKWARD, deltaTime);
+		Engine::Instance()._currentCamera.ProcessKeyboard(BACKWARD, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		camera.ProcessKeyboard(LEFT, deltaTime);
+		Engine::Instance()._currentCamera.ProcessKeyboard(LEFT, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		camera.ProcessKeyboard(RIGHT, deltaTime);
+		Engine::Instance()._currentCamera.ProcessKeyboard(RIGHT, deltaTime);
 
-	Engine::Instance().setCamera(camera);
 }
 
 void mouse_button_callback(GLFWwindow * window, int button, int action, int mods)
