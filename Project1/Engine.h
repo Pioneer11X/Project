@@ -229,13 +229,14 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 		lastX = xpos;
 		lastY = ypos;
 
-		Engine::Instance().getCurrentCamera().ProcessMouseMovement(xoffset, yoffset);
+		// std::cout << xoffset << ", " << yoffset << std::endl;
 
+		Engine::Instance()._currentCamera.ProcessMouseMovement(xoffset, yoffset);
+		firstMouse = false;
 	}
 	else {
 		lastX = xpos;
 		lastY = ypos;
-		firstMouse = false;
 	}
 
 
