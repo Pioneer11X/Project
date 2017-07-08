@@ -36,8 +36,7 @@ int main()
 
 	GUI::Instance().End();
 
-	// glfw: terminate, clearing all previously allocated GLFW resources.
-	// ------------------------------------------------------------------
-	glfwTerminate();
+	Engine::Instance().CloseSystems();
+
 	return 0;
 }
