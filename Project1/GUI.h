@@ -25,7 +25,7 @@ public:
 
 
 	void Init(GLFWwindow * window);
-	void Loop();
+	bool Loop();
 	void Draw();
 	void End();
 

@@ -13,8 +13,11 @@ void GUI::Init(GLFWwindow * window)
 	ImGui_ImplGlfwGL3_Init(window, false);
 }
 
-void GUI::Loop()
+bool GUI::Loop()
 {
+
+	bool returnVar = true;
+
 	ImGui_ImplGlfwGL3_NewFrame();
 
 	// Menu
@@ -23,7 +26,7 @@ void GUI::Loop()
 		if (ImGui::BeginMenu("Menu"))
 		{
 			if (ImGui::MenuItem("Quit")) {
-				// TODO: Add a global singleton variable to qui
+				returnVar = false;
 			}
 			ImGui::EndMenu();
 		}
@@ -36,6 +39,7 @@ void GUI::Loop()
 		}
 		ImGui::EndMainMenuBar();
 	}
+	return returnVar;
 }
 
 void GUI::Draw()

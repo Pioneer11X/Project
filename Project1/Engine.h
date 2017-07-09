@@ -34,6 +34,12 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
 void mouse_button_callback(GLFWwindow * window, int button, int action, int mods);
 
+enum EngineState {
+	RUNNING,
+	PAUSE,
+	SHOULD_CLOSE
+};
+
 
 class Engine {
 
@@ -48,13 +54,13 @@ private:
 	// Variables for the Engine and the Window.
 
 	GLFWwindow * _engineCurrentWindow;
-	
 	bool ShouldClose;
 	
 
 public:
 
 	Camera _currentCamera;
+	EngineState _currentState;
 
 	static Engine& Instance() {
 		static Engine instance;
@@ -111,7 +117,7 @@ public:
 
 	void Run(Scene _scene) {
 
-		while ( !glfwWindowShouldClose(Engine::Instance().getCurrentWindow()) )
+		while ( !glfwWindowShouldClose(Engine::Instance().getCurrentWindow()) && ( EngineState::SHOULD_CLOSE != _currentState ) )
 		{
 
 			float currentFrame = glfwGetTime();
@@ -119,7 +125,9 @@ public:
 			lastFrame = currentFrame;
 
 			// TODO: Change this to per scene basis.. much later into the Engine Dev.
-			GUI::Instance().Loop();
+			if (!GUI::Instance().Loop()) {
+				Instance()._currentState = EngineState::SHOULD_CLOSE;
+			}
 
 			processInput(Engine::Instance().getCurrentWindow());
 
@@ -136,7 +144,7 @@ public:
 			glfwPollEvents();
 
 		}
-			
+		return;
 
 	}
 
