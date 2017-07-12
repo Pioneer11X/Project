@@ -14,7 +14,8 @@ int main()
 
 	// build and compile shaders
 	// -------------------------
-	Shader ourShader("model.vs", "model.fs");
+	// Shader ourShader("model.vs", "model.fs");
+	Shader ourShader("model.vs", "model_grayscale.fs");
 
 	// load models
 	// -----------

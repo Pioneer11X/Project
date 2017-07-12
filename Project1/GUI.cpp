@@ -1,7 +1,6 @@
 #include "GUI.h"
 
 
-
 GUI::GUI()
 {
 
@@ -30,10 +29,10 @@ bool GUI::Loop()
 			}
 			ImGui::EndMenu();
 		}
-		if (ImGui::BeginMenu("Help"))
+		if (ImGui::BeginMenu("Shaders"))
 		{
-			ImGui::MenuItem("Metrics");
-			ImGui::MenuItem("Style Editor");
+			ImGui::MenuItem("Original");
+			ImGui::MenuItem("Grayscale");
 			ImGui::MenuItem("About ImGui");
 			ImGui::EndMenu();
 		}

@@ -112,5 +112,8 @@
     <None Include="model.fs">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="model_grayscale.fs">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
